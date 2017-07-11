@@ -4,6 +4,7 @@ import Header from './Header';
 import Footer from './Footer';
 import Landing from './Landing';
 import LogIn from './LogIn';
+import CreateAccount from './CreateAccount';
 
 class Router extends Component {
   render() {
@@ -12,6 +13,7 @@ class Router extends Component {
         <Header />
         <Route exact path="/" component={Landing} />
         <Route exact path="/login" component={LogIn} />
+        <Route exact path="/create-account" component={CreateAccount} />
         <Footer />
       </div>
     );

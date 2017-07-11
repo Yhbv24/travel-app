@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter, Route, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import styles from './css/header-styles.min.css';
 
 class Header extends Component {
@@ -7,8 +7,8 @@ class Header extends Component {
     return (
       <div className="header">
         <ul id="nav-bar">
-          <li>Home</li>
-          <li>Log-In</li>
+          <li><Link to="/">Home</Link></li>
+          <li><Link to="/login">Log-In</Link></li>
           <li>Contact</li>
           <li>About</li>
         </ul>

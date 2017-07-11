@@ -1,5 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Landing from './Landing';
+import Router from './Router';
+import { BrowserRouter } from 'react-router-dom'
 
-ReactDOM.render(<Landing />, document.getElementById('root'));
+ReactDOM.render((
+  <BrowserRouter>
+    <Router />
+  </BrowserRouter>
+), document.getElementById('root'));

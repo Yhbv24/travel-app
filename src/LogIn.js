@@ -7,21 +7,23 @@ class LogIn extends Component {
     this.state = {};
     this.getEmail = this.getEmail.bind(this);
     this.getPassword = this.getPassword.bind(this);
-    this.logIt = this.logIt.bind(this);
+    this.logIn = this.logIn.bind(this);
   }
   getEmail(e) {
     this.setState = ({
-      email: e.target.event
+      email: e.target.value
     });
   }
   getPassword(e) {
     this.setState = ({
-      password: e.target.event
+      password: e.target.value
     });
   }
-  logIt(e) {
+  logIn(e) {
     e.preventDefault();
-    console.log(this.state.email);
+    if (this.state.email === 'ash' && this.state.password === 'ash') {
+      console.log('worked!');
+    }
   }
   render() {
     return (
@@ -29,7 +31,7 @@ class LogIn extends Component {
         <form>
           <input type="text" name="email" onChange={this.getEmail} placeholder="Email"/>
           <input type="text" name="password" onChange={this.getPassword} placeholder="Password"/>
-          <button type="submit" onClick={this.logIt}>Log-In</button>
+          <button type="submit" onClick={this.logIn}>Log-In</button>
         </form>
       </div>
     );

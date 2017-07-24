@@ -2,8 +2,7 @@
 
 # dependencies
 /node_modules
-/src/server.js
-/src/server.min.js
+/src/fbapi.js
 
 # testing
 /coverage

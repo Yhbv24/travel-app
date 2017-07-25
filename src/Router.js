@@ -6,6 +6,7 @@ import Landing from './Landing';
 import LogIn from './LogIn';
 import TripList from './TripList';
 import CreateAccount from './CreateAccount';
+import IndivTrip from './IndivTrip';
 
 class Router extends Component {
   render() {
@@ -16,6 +17,7 @@ class Router extends Component {
         <Route exact path="/login" component={LogIn} />
         <Route exact path="/create-account" component={CreateAccount} />
         <Route exact path="/trip-list" component={TripList} />
+        <Route exact path="/trip/:id" component={IndivTrip}/>
         <Footer />
       </div>
     );

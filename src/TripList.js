@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import apiKey from './fbapi';
 
 var firebase = require("firebase");
@@ -54,9 +55,16 @@ class TripList extends Component {
       date: this.state.date
     });
     this.populateData();
+    this.setState({
+      place: '',
+      date: ''
+    });
   }
   deleteEntry(key) {
-    this.firebaseRef.child(key).remove();
+    var confirm = window.confirm("Are you sure you want to delete this entry?");
+    if (confirm) {
+      this.firebaseRef.child(key).remove();
+    }
     this.populateData();
   }
   render() {
@@ -64,8 +72,8 @@ class TripList extends Component {
       return (
         <div className="trip-list">
           <div id="add-trip">
-            <input id="place" type="text" onChange={this.newPlace} value={this.state.place} placeholder="Place name" />
-            <input id="date" type="date" onChange={this.newDate} value={this.state.date} placeholder="Date" />
+            <input id="place" type="text" onChange={this.newPlace} value={this.state.place} placeholder="Place name" required />
+            <input id="date" type="date" onChange={this.newDate} value={this.state.date} placeholder="Date" required />
             <button type="submit" onClick={this.handleSubmit}>Add Trip</button>
           </div>
           <div>
@@ -74,16 +82,14 @@ class TripList extends Component {
                 <tr>
                   <th>Location</th>
                   <th>Date</th>
-                  <th>Edit</th>
                   <th>Delete</th>
                 </tr>
               </thead>
               <tbody id="trip-list-row">
                 {Object.keys(this.state.trips).map((i) =>
                   <tr key={i}>
-                    <td>{this.state.trips[i].place}</td>
+                    <td><Link to={{pathname: '/trip/3' + i, state: {place: this.state.trips[i].place, date: this.state.trips[i].date}}}>{this.state.trips[i].place}</Link></td>
                     <td>{this.state.trips[i].date}</td>
-                    <td><button type="submit">Edit</button></td>
                     <td><button type="button" onClick={() => {this.deleteEntry(i)}}>Delete</button></td>
                   </tr>)
                 }
@@ -95,8 +101,8 @@ class TripList extends Component {
     } else {
       return (
         <div id="add-trip">
-          <input type="text" onChange={this.newPlace} value={this.state.place} placeholder="Place name" />
-          <input type="date" onChange={this.newDate} value={this.state.date} placeholder="Date" />
+          <input type="text" onChange={this.newPlace} value={this.state.place} placeholder="Place name" required />
+          <input type="date" onChange={this.newDate} value={this.state.date} placeholder="Date" required />
           <button type="submit" onClick={this.handleSubmit}>Add Trip</button>
         </div>
       )

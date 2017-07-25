@@ -20,14 +20,18 @@ class TripList extends Component {
     this.newDate = this.newDate.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
-  mixins: [ReactFireMixin]
   componentWillMount() {
     this.firebaseRef = firebase.database().ref("trips");
-    this.firebaseRef.on("child_added", function(dataSnapshot) {
-      this.setState({
-        trips: this.items
+  }
+  componentDidMount() {
+    var allTrips = [];
+    var _this = this;
+    var firebaseRef = firebase.database().ref();
+    this.firebaseRef.once('value').then(function(data) {
+      _this.setState({
+        trips: data.val()
       });
-    }.bind(this));
+    });
   }
   componentWillUnmount() {
     this.firebaseRef.off();
@@ -48,35 +52,47 @@ class TripList extends Component {
       place: this.state.place,
       date: this.state.date
     });
-    this.setState({
-      place: '',
-      date: ''
-    });
   }
   render() {
-    return (
-      <div className="trip-list">
-        <div id="add-trip">
-          <input type="text" onChange={this.newPlace} placeholder="Place name" />
-          <input type="date" onChange={this.newDate} placeholder="Date" />
-          <button type="submit" onClick={this.handleSubmit}>Add Trip</button>
-        </div>
-        <div>
-          <table>
-            <thead>
-              <th>
+    if (this.state.trips) {
+      return (
+        <div className="trip-list">
+          <div id="add-trip">
+            <input type="text" onChange={this.newPlace} value={this.state.place} placeholder="Place name" />
+            <input type="date" onChange={this.newDate} value={this.state.date} placeholder="Date" />
+            <button type="submit" onClick={this.handleSubmit}>Add Trip</button>
+          </div>
+          <div>
+            <table>
+              <thead>
                 <tr>
-                  <td>Location</td>
-                  <td>Date</td>
+                  <th>Location</th>
+                  <th>Date</th>
+                  <th>Edit</th>
+                  <th>Delete</th>
                 </tr>
-              </th>
-            </thead>
-            <tbody id="trip-list-row">
-            </tbody>
-          </table>
+              </thead>
+              <tbody id="trip-list-row">
+                {Object.keys(this.state.trips).map((i) =>
+                  <tr key={i}>
+                    <td>{this.state.trips[i].place}</td>
+                    <td>{this.state.trips[i].date}</td>
+                    <td>Edit</td>
+                    <td>Delete</td>
+                  </tr>)
+                }
+              </tbody>
+            </table>
+          </div>
         </div>
-      </div>
-    );
+      );
+    } else {
+      return (
+        <div>
+          Nada
+        </div>
+      )
+    }
   }
 }
 

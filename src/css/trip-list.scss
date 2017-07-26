@@ -1,0 +1,28 @@
+.trip-list {
+  font-family: 'Open Sans', sans-serif;
+  .btn,
+  .btn-sm,
+  .btn-xs {
+    border-radius: 2px;
+  }
+}
+#add-trip {
+  margin: 20px auto;
+  width: 500px;
+  #place,
+  #start-date,
+  #end-date {
+    margin: 5px 0;
+  }
+  #submit-button {
+    margin: 0 auto;
+  }
+}
+
+#trip-list-table {
+  background-color: white;
+}
+
+.btn {
+  border-radius: 0;
+}

@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import apiKey from './fbapi';
+import AddTripForm from './AddTripForm';
+import styles from './css/trip-list.min.css';
 
 var firebase = require("firebase");
 var config = {
@@ -14,11 +16,12 @@ var config = {
 firebase.initializeApp(config);
 
 class TripList extends Component {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
     this.state = {};
     this.newPlace = this.newPlace.bind(this);
-    this.newDate = this.newDate.bind(this);
+    this.newStartDate = this.newStartDate.bind(this);
+    this.newEndDate = this.newEndDate.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.populateData = this.populateData.bind(this);
     this.deleteEntry = this.deleteEntry.bind(this);
@@ -26,6 +29,21 @@ class TripList extends Component {
   firebaseRef = firebase.database().ref("trips");
   componentWillMount() {
     this.populateData();
+  }
+  newPlace(e) {
+    this.setState({
+      place: e.target.value
+    });
+  }
+  newStartDate(e) {
+    this.setState({
+      startDate: e.target.value
+    });
+  }
+  newEndDate(e) {
+    this.setState({
+      endDate: e.target.value
+    });
   }
   populateData() {
     var _this = this;
@@ -38,26 +56,18 @@ class TripList extends Component {
   componentWillUnmount() {
     this.firebaseRef.off();
   }
-  newPlace(e) {
-    this.setState({
-      place: e.target.value
-    });
-  }
-  newDate(e) {
-    this.setState({
-      date: e.target.value
-    });
-  }
   handleSubmit(e) {
     e.preventDefault();
     this.firebaseRef.push({
       place: this.state.place,
-      date: this.state.date
+      startDate: this.state.startDate,
+      endDate: this.state.startDate
     });
     this.populateData();
     this.setState({
       place: '',
-      date: ''
+      startDate: '',
+      endDate: ''
     });
   }
   deleteEntry(key) {
@@ -71,39 +81,45 @@ class TripList extends Component {
     if (this.state.trips) {
       return (
         <div className="trip-list">
-          <div id="add-trip">
-            <input id="place" type="text" onChange={this.newPlace} value={this.state.place} placeholder="Place name" required />
-            <input id="date" type="date" onChange={this.newDate} value={this.state.date} placeholder="Date" required />
-            <button type="submit" onClick={this.handleSubmit}>Add Trip</button>
-          </div>
-          <div>
-            <table>
-              <thead>
-                <tr>
-                  <th>Location</th>
-                  <th>Date</th>
-                  <th>Delete</th>
-                </tr>
-              </thead>
-              <tbody id="trip-list-row">
-                {Object.keys(this.state.trips).map((i) =>
-                  <tr key={i}>
-                    <td><Link to={{pathname: '/trip/3' + i, state: {place: this.state.trips[i].place, date: this.state.trips[i].date}}}>{this.state.trips[i].place}</Link></td>
-                    <td>{this.state.trips[i].date}</td>
-                    <td><button type="button" onClick={() => {this.deleteEntry(i)}}>Delete</button></td>
-                  </tr>)
-                }
-              </tbody>
-            </table>
+          <div className="row">
+            <AddTripForm
+              place={this.state.place}
+              startDate={this.state.startDate}
+              endDate={this.state.endDate}
+              changePlace={this.newPlace}
+              changeStartDate={this.newStartDate}
+              changeEndDate={this.newEndDate}
+              submit={this.handleSubmit}
+            />
+            <div className="col-sm-4">
+              <table id="trip-list-table" className="table table-striped table-hover">
+                <thead>
+                  <tr>
+                    <th>Location</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Delete</th>
+                  </tr>
+                </thead>
+                <tbody id="trip-list-row">
+                  {Object.keys(this.state.trips).map((i) =>
+                    <tr key={i}>
+                      <td><Link to={{pathname: '/trip/3' + i, state: {place: this.state.trips[i].place, date: this.state.trips[i].date}}}>{this.state.trips[i].place}</Link></td>
+                      <td>{this.state.trips[i].startDate}</td>
+                      <td>{this.state.trips[i].endDate}</td>
+                      <td><button type="button" className="btn btn-xs btn-danger" onClick={() => {this.deleteEntry(i)}}>Delete</button></td>
+                    </tr>)
+                  }
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       );
     } else {
       return (
-        <div id="add-trip">
-          <input type="text" onChange={this.newPlace} value={this.state.place} placeholder="Place name" required />
-          <input type="date" onChange={this.newDate} value={this.state.date} placeholder="Date" required />
-          <button type="submit" onClick={this.handleSubmit}>Add Trip</button>
+        <div>
+          <AddTripForm />
         </div>
       )
     }

@@ -5,17 +5,9 @@
   .btn-xs {
     border-radius: 2px;
   }
-}
-#add-trip {
-  margin: 20px auto;
-  width: 500px;
-  #place,
-  #start-date,
-  #end-date {
-    margin: 5px 0;
-  }
-  #submit-button {
-    margin: 0 auto;
+  #add-trip-form-title,
+  #trip-list-title {
+    text-align: center;
   }
 }
 

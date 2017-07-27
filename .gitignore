@@ -3,6 +3,8 @@
 # dependencies
 /node_modules
 /src/fbapi.js
+/src/gmapsapi.js
+/src/loadJS.js
 
 # testing
 /coverage

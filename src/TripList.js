@@ -61,7 +61,7 @@ class TripList extends Component {
     this.firebaseRef.push({
       place: this.state.place,
       startDate: this.state.startDate,
-      endDate: this.state.startDate
+      endDate: this.state.endDate
     });
     this.populateData();
     this.setState({
@@ -80,22 +80,27 @@ class TripList extends Component {
   render() {
     if (this.state.trips) {
       return (
-        <div className="trip-list">
+        <div className="trip-list container">
           <div className="row">
-            <AddTripForm
-              place={this.state.place}
-              startDate={this.state.startDate}
-              endDate={this.state.endDate}
-              changePlace={this.newPlace}
-              changeStartDate={this.newStartDate}
-              changeEndDate={this.newEndDate}
-              submit={this.handleSubmit}
-            />
-            <div className="col-sm-4">
+            <div className="col-sm-3">
+              <AddTripForm
+                  place={this.state.place}
+                  startDate={this.state.startDate}
+                  endDate={this.state.endDate}
+                  changePlace={this.newPlace}
+                  changeStartDate={this.newStartDate}
+                  changeEndDate={this.newEndDate}
+                  submit={this.handleSubmit}
+                />
+              </div>
+            <div className="col-sm-9">
+              <div id="trip-list-title">
+                <h1>Your Trips</h1>
+              </div>
               <table id="trip-list-table" className="table table-striped table-hover">
                 <thead>
                   <tr>
-                    <th>Location</th>
+                    <th>Trip</th>
                     <th>Start Date</th>
                     <th>End Date</th>
                     <th>Delete</th>
@@ -104,7 +109,7 @@ class TripList extends Component {
                 <tbody id="trip-list-row">
                   {Object.keys(this.state.trips).map((i) =>
                     <tr key={i}>
-                      <td><Link to={{pathname: '/trip/3' + i, state: {place: this.state.trips[i].place, date: this.state.trips[i].date}}}>{this.state.trips[i].place}</Link></td>
+                      <td><Link to={{pathname: '/trip/' + i, state: {place: this.state.trips[i].place, startDate: this.state.trips[i].startDate, endDate: this.state.trips[i].endDate}}}>{this.state.trips[i].place}</Link></td>
                       <td>{this.state.trips[i].startDate}</td>
                       <td>{this.state.trips[i].endDate}</td>
                       <td><button type="button" className="btn btn-xs btn-danger" onClick={() => {this.deleteEntry(i)}}>Delete</button></td>
@@ -118,10 +123,22 @@ class TripList extends Component {
       );
     } else {
       return (
-        <div>
-          <AddTripForm />
+        <div className="container">
+          <div className="row">
+            <div className="col-sm-12">
+              <AddTripForm
+                place={this.state.place}
+                startDate={this.state.startDate}
+                endDate={this.state.endDate}
+                changePlace={this.newPlace}
+                changeStartDate={this.newStartDate}
+                changeEndDate={this.newEndDate}
+                submit={this.handleSubmit}
+              />
+            </div>
+          </div>
         </div>
-      )
+      );
     }
   }
 }

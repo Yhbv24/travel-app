@@ -8,7 +8,7 @@ class Header extends Component {
       <div className="header">
         <ul id="nav-bar">
           <li><Link to="/">Home</Link></li>
-          <li><Link to="/login">Log-In</Link></li>
+          <li><Link to="/trip-list">Your Trips</Link></li>
           <li>Contact</li>
           <li>About</li>
         </ul>

@@ -58,11 +58,15 @@ class TripList extends Component {
   }
   handleSubmit(e) {
     e.preventDefault();
-    this.firebaseRef.push({
-      place: this.state.place,
-      startDate: this.state.startDate,
-      endDate: this.state.endDate
-    });
+    if (!this.state.place && !this.state.startDate && !this.state.endDate) {
+      alert("Please make sure to fill out all fields.");
+    } else {
+      this.firebaseRef.push({
+        place: this.state.place,
+        startDate: this.state.startDate,
+        endDate: this.state.endDate
+      });
+    }
     this.populateData();
     this.setState({
       place: '',

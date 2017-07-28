@@ -16,12 +16,13 @@ It is currently under development, so its functionality is currently limited. St
 * React
 * React Router DOM
 * Firebase
-* Reactfire
 * HTML
 * SCSS
+* Bootstrap
 * Google Maps API
-* Google Maps React
-* LoadJS
+* Google Maps (React Library)
+* NPM
+* Yarn
 
 ## Licensing
 

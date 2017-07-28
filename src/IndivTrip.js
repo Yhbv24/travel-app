@@ -9,18 +9,20 @@ const mapStyles = { // Styles only for the Google Map
 }
 
 class IndivTrip extends Component {
-  getLatLong(mapProps, map, props) {
-    if (this.props) {
-      const {google} = mapProps;
-      const addrInput = props.location.state.place
-      const geocoder = new google.maps.Geocoder();
-      geocoder.geocode({address: addrInput}, function(results, status) {
-        if (status == google.maps.GeocoderStatus.OK) {
-          const myResult = results[0].geometry.location;
-          map.setCenter(myResult);
-        }
-      });
-    }
+  constructor(props) {
+    super(props);
+    this.getLatLong = this.getLatLong.bind(this);
+  }
+  getLatLong(mapProps, map) {
+    const {google} = mapProps;
+    const addrInput = this.props.location.state.place
+    const geocoder = new google.maps.Geocoder();
+    geocoder.geocode({address: addrInput}, function(results, status) {
+      if (status == google.maps.GeocoderStatus.OK) {
+        const myResult = results[0].geometry.location;
+        map.setCenter(myResult);
+      }
+    });
   }
   render() {
     if (this.props) {
